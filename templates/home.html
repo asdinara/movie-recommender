@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+    <link rel="stylesheet" href="../static/stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.css" />
+    <title>Welcome page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+    <script>
+        function validateForm() {
+            for (let i = 1; i <= 3; i++) {
+                let rating = parseFloat(document.getElementsByName(`movie${i}_rating`)[0].value);
+                if (rating < 1 || rating > 5) {
+                    alert(`Rating for Movie ${i} should be between 1 and 5.`);
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        const movieList = ["The Matrix", "The Godfather", "Pulp Fiction", "The Shawshank Redemption"];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const movieInputs = document.querySelectorAll('.awesomplete');
+            movieInputs.forEach(input => {
+                new Awesomplete(input, {
+                    list: movieList,
+                    minChars: 1
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <img id="logo-homepage" src="../static/cinema.jpg" width="200" height="200">
+    <p>Enter 3 movie names and rate them on a scale 0-5 🌟:</p>
+    <form action="/results" onsubmit="return validateForm();">
+        Movie 1 :<input class="input-placeholder awesomplete" type="text" name="movie1_name" placeholder="Movie name">
+        Rating :<input class="input-placeholder" type="text" name="movie1_rating" placeholder="0-5"><br>
+        Movie 2 :<input class="input-placeholder awesomplete" type="text" name="movie2_name" placeholder="Movie name">
+        Rating :<input class="input-placeholder" type="text" name="movie2_rating" placeholder="0-5"><br>
+        Movie 3 :<input class="input-placeholder awesomplete" type="text" name="movie3_name" placeholder="Movie name">
+        Rating :<input class="input-placeholder" type="text" name="movie3_rating" placeholder="0-5"><br>
+        <input id="submit-button" type="submit" value="🍿">
+    </form>
+    <p>Get recommendation <a href="/results"> here</a>
+    </p>
+</body>
+</html>
